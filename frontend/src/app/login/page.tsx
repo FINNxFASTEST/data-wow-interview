@@ -75,8 +75,14 @@ function LoginContent() {
       const u = await login(data.email, data.password);
       router.push(pathAfterSignIn(u));
     } catch (err) {
-      const msg = err instanceof ApiError ? err.message : "Something went wrong. Please try again.";
-      const text = typeof msg === "string" ? msg : "Something went wrong.";
+      let text = "Something went wrong. Please try again.";
+      if (err instanceof ApiError) {
+        if (err.status === 422 || err.status === 401) {
+          text = "Invalid email or password.";
+        } else if (typeof err.message === "string" && err.message) {
+          text = err.message;
+        }
+      }
       setError("root", { message: text });
       toast.error(text);
     }
