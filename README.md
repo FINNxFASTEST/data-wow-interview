@@ -4,7 +4,7 @@
 ## Production
 
 ```bash
-docker compose -f docker-compose.prod.yml up --build
+docker compose -f docker-compose.prod.yml up -d --build
 ```
 
 Seed demo accounts once after first boot (wait until backend is healthy):
