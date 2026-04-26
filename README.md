@@ -26,7 +26,7 @@ docker compose exec backend npm run seed:run
 | Email                   | Password | Role     |
 | ----------------------- | -------- | -------- |
 | `admin@example.com`     | `secret` | admin    |
-| `host@example.com`      | `secret` | host     |
+| `user@example.com`      | `secret` | host     |
 
 
 ---
