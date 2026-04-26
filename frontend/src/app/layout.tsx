@@ -27,7 +27,7 @@ export default function RootLayout({
         <AuthProvider>
           <AuthCookieSync />
           {children}
-          <Toaster richColors position="top-center" />
+          <Toaster richColors position="top-right" />
         </AuthProvider>
       </body>
     </html>

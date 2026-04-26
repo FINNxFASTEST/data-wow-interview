@@ -174,36 +174,38 @@ export default function AdminConcertsPage() {
           className="mt-6 space-y-4 rounded-lg border border-border bg-card p-5 shadow-sm md:p-6"
         >
           <h2 className="text-2xl font-semibold text-theme-primary">Create</h2>
-          <div>
-            <label className="text-sm font-medium text-foreground" htmlFor="n">
-              Concert Name
-            </label>
-            <input
-              id="n"
-              className="mt-1.5 w-full h-10 rounded-md border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Please input concert name"
-              required
-            />
-          </div>
-          <div>
-            <label className="text-sm font-medium text-foreground" htmlFor="s">
-              Total of seat
-            </label>
-            <div className="relative mt-1.5">
+          <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
+            <div className="min-w-0 w-full">
+              <label className="text-sm font-medium text-foreground" htmlFor="n">
+                Concert Name
+              </label>
               <input
-                id="s"
-                type="number"
-                min={1}
-                className="h-10 w-full rounded-md border border-border bg-background pr-10 pl-3 text-sm text-foreground tabular-nums"
-                value={totalSeats}
-                onChange={(e) => setTotalSeats(Number(e.target.value))}
+                id="n"
+                className="mt-1.5 h-10 w-full rounded-md border border-border bg-background px-3 text-sm text-foreground placeholder:text-muted-foreground"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Please input concert name"
+                required
               />
-              <User
-                className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
-                aria-hidden
-              />
+            </div>
+            <div className="min-w-0 w-full">
+              <label className="text-sm font-medium text-foreground" htmlFor="s">
+                Total of seat
+              </label>
+              <div className="relative mt-1.5">
+                <input
+                  id="s"
+                  type="number"
+                  min={1}
+                  className="h-10 w-full min-w-0 rounded-md border border-border bg-background pr-10 pl-3 text-sm text-foreground tabular-nums"
+                  value={totalSeats}
+                  onChange={(e) => setTotalSeats(Number(e.target.value))}
+                />
+                <User
+                  className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+                  aria-hidden
+                />
+              </div>
             </div>
           </div>
           <div>
