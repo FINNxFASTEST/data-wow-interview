@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Nav } from "@/components/common/Nav";
-import { Footer } from "@/components/common/Footer";
 import { ApiError } from "@/services";
 import { concertsApi, type ConcertListItem } from "@/services/concerts.service";
 import {
@@ -64,9 +62,7 @@ export default function MyReservationsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <Nav />
-      <main className="flex-1 mx-auto max-w-3xl w-full px-4 md:px-6 py-8 md:py-12">
+    <div className="p-4 md:p-8 max-w-3xl w-full mx-auto">
         <h1 className="text-2xl font-semibold text-foreground">My tickets</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           One active seat per show; cancel to release your hold.
@@ -104,8 +100,6 @@ export default function MyReservationsPage() {
         {rows && rows.length === 0 && (
           <p className="text-sm text-muted-foreground">No reservations yet.</p>
         )}
-      </main>
-      <Footer />
     </div>
   );
 }

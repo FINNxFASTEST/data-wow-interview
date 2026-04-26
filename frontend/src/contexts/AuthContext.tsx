@@ -4,6 +4,7 @@ import {
   authApi,
   clearAuth,
   mapMeResponseToUser,
+  mapAuthResponseToUser,
   persistAuth,
 } from "@/services";
 import type { User } from "@/types";
@@ -20,13 +21,13 @@ interface AuthContextValue {
   user: User | null;
   token: string | null;
   loading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<User>;
   register: (data: {
     email: string;
     password: string;
     firstName: string;
     lastName: string;
-  }) => Promise<void>;
+  }) => Promise<User>;
   logout: () => void;
 }
 
@@ -68,6 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       persistAuth(res);
       setToken(res.token);
       await hydrate();
+      return mapAuthResponseToUser(res);
     },
     [hydrate],
   );
@@ -83,6 +85,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       persistAuth(res);
       setToken(res.token);
       await hydrate();
+      return mapAuthResponseToUser(res);
     },
     [hydrate],
   );

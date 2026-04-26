@@ -37,6 +37,17 @@ Stack already in use: **NestJS 11**, **PostgreSQL + Sequelize** ([ARCHITECTURE.m
 
 ---
 
+## Task 2b — UX — local mockups ([frontend/src/ux/](../frontend/src/ux/))
+
+- [x] **Auth**: access level (User vs Administrator) then split brand / form for login and register; role-based default route after sign-in (`admin` → `/admin/concerts`, `user` → `/concerts`)
+- [x] **User shell**: sidebar on authenticated user routes (Home, My tickets, switch to admin when `user.role === 'admin'`)
+- [x] **User concerts**: list rows with **Reserve** / **Cancel** using existing APIs; detail `/concerts/[id]` optional
+- [x] **Admin shell**: vertical sidebar, metric strip (client derived), create + list; **delete** via modal
+- [x] **Admin history** (`/admin/audit`): table aligned with “History” mock (columns, density)
+- [x] **Responsive**: split auth stacks on small screens; mobile sidebar via sheet
+
+---
+
 ## Task 3 — Authentication and authorization (JWT)
 
 - [x] JWT register / login / refresh / logout (existing `auth/`)

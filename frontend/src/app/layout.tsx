@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { Toaster } from "sonner";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { AuthCookieSync } from "@/components/auth/AuthCookieSync";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -24,6 +25,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className="font-sans antialiased">
         <AuthProvider>
+          <AuthCookieSync />
           {children}
           <Toaster richColors position="top-center" />
         </AuthProvider>
