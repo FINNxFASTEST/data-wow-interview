@@ -38,7 +38,7 @@ export class ReservationsController {
 
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Roles(RoleEnum.user)
+    @Roles(RoleEnum.user, RoleEnum.admin)
     @Get('me')
     @ApiOkResponse({ type: [ReservationResponseDto] })
     myReservations(@Request() request: ReqWithUser): Promise<ReservationResponseDto[]> {
@@ -58,7 +58,7 @@ export class ReservationsController {
 
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Roles(RoleEnum.user)
+    @Roles(RoleEnum.user, RoleEnum.admin)
     @Delete(':id')
     @ApiParam({ name: 'id' })
     @HttpCode(HttpStatus.OK)

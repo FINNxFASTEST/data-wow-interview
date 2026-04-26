@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 import { ApiError } from "@/services";
 import { useAuth } from "@/contexts/AuthContext";
+import { canUseUserConcertFlow } from "@/lib/user-concert-role";
 import { concertsApi, type ConcertListItem } from "@/services/concerts.service";
 
 export default function ConcertDetailPage() {
@@ -45,7 +46,7 @@ export default function ConcertDetailPage() {
     }
   }
 
-  const canBook = user?.role === "user" && c && !c.soldOut;
+  const canBook = canUseUserConcertFlow(user) && c && !c.soldOut;
 
   return (
     <div className="p-4 md:p-8 max-w-3xl w-full mx-auto">
@@ -85,12 +86,7 @@ export default function ConcertDetailPage() {
                 {busy ? "Booking…" : "Reserve one seat"}
               </button>
             )}
-            {!authLoading && user?.role === "admin" && (
-              <p className="text-sm text-muted-foreground self-center">
-                Sign in as a user account to test booking, or use the admin API.
-              </p>
-            )}
-            {!authLoading && user?.role === "user" && c.soldOut && (
+            {!authLoading && canUseUserConcertFlow(user) && c.soldOut && (
               <p className="text-sm text-muted-foreground">No seats left.</p>
             )}
           </div>

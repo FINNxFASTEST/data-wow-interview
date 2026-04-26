@@ -31,7 +31,7 @@ export function middleware(request: NextRequest) {
     if (!token) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
-    if (pathname.startsWith("/me/") && role !== 2) {
+    if (pathname.startsWith("/me/") && role !== 1 && role !== 2) {
       return NextResponse.redirect(new URL("/concerts", request.url));
     }
   }

@@ -86,7 +86,7 @@ export class ConcertsController {
 
     @ApiBearerAuth()
     @UseGuards(AuthGuard('jwt'), RolesGuard)
-    @Roles(RoleEnum.user)
+    @Roles(RoleEnum.user, RoleEnum.admin)
     @Post(':id/reservations')
     @ApiParam({ name: 'id' })
     @HttpCode(HttpStatus.CREATED)

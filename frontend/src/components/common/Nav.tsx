@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
+import { canUseUserConcertFlow } from "@/lib/user-concert-role";
 
 export function Nav() {
   const { user, logout } = useAuth();
@@ -37,7 +38,7 @@ export function Nav() {
                   Admin
                 </Link>
               )}
-              {user.role === "user" && (
+              {canUseUserConcertFlow(user) && (
                 <Link
                   href="/me/reservations"
                   className="text-xs sm:text-sm px-2 sm:px-3 py-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent no-underline whitespace-nowrap"
