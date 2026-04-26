@@ -151,7 +151,7 @@ export default function ConcertsListPage() {
                           type="button"
                           disabled={busyId !== null}
                           onClick={() => void doCancel(res.id)}
-                          className="h-10 min-w-[7.5rem] rounded-full border-0 bg-destructive/90 px-5 text-sm font-medium text-destructive-foreground shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
+                          className="h-10 min-w-[7.5rem] rounded-md border-0 bg-destructive/90 px-5 text-sm font-medium text-destructive-foreground shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
                         >
                           {busyId === res.id ? "…" : "Cancel"}
                         </button>
@@ -164,7 +164,7 @@ export default function ConcertsListPage() {
                           type="button"
                           disabled={busyId !== null}
                           onClick={() => void doReserve(c.id)}
-                          className="h-10 min-w-[7.5rem] rounded-full bg-primary px-5 text-sm font-medium text-primary-foreground shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
+                          className="h-10 min-w-[7.5rem] rounded-md bg-primary px-5 text-sm font-medium text-primary-foreground shadow-sm transition-opacity hover:opacity-90 disabled:opacity-50"
                         >
                           {busyId === c.id ? "…" : "Reserve"}
                         </button>
