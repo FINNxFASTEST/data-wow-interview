@@ -31,41 +31,41 @@ services:
       timeout: 5s
       retries: 5
 
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    ports:
-      - "3001:3001"
-    environment:
-      NODE_ENV: production
-      APP_PORT: 3001
-      DATABASE_URL: postgresql://your_app:your_app@postgres:5432/your_app_db
-      DATABASE_SYNC: "false"
-      AUTH_JWT_SECRET: change_me_jwt_docker
-      AUTH_REFRESH_SECRET: change_me_refresh_docker
-      AUTH_JWT_TOKEN_EXPIRES_IN: 15m
-      AUTH_REFRESH_TOKEN_EXPIRES_IN: 3650d
-      FRONTEND_DOMAIN: http://localhost:3000
-      REDIS_ENABLED: "false"
-    depends_on:
-      postgres:
-        condition: service_healthy
+  # backend:
+  #   build:
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3001:3001"
+  #   environment:
+  #     NODE_ENV: production
+  #     APP_PORT: 3001
+  #     DATABASE_URL: postgresql://your_app:your_app@postgres:5432/your_app_db
+  #     DATABASE_SYNC: "false"
+  #     AUTH_JWT_SECRET: change_me_jwt_docker
+  #     AUTH_REFRESH_SECRET: change_me_refresh_docker
+  #     AUTH_JWT_TOKEN_EXPIRES_IN: 15m
+  #     AUTH_REFRESH_TOKEN_EXPIRES_IN: 3650d
+  #     FRONTEND_DOMAIN: http://localhost:3000
+  #     REDIS_ENABLED: "false"
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
 
-  web:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        NEXT_PUBLIC_API_URL: http://localhost:3001
-    restart: unless-stopped
-    ports:
-      - "3000:3000"
-    environment:
-      NODE_ENV: production
-    depends_on:
-      - backend
+  # web:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #     args:
+  #       NEXT_PUBLIC_API_URL: http://localhost:3001
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     NODE_ENV: production
+  #   depends_on:
+  #     - backend
 
 volumes:
   postgres_data:
