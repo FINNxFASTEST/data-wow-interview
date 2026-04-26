@@ -21,17 +21,26 @@ describe('CancelReservationUseCase', () => {
         const mock: Pick<ReservationRepository, 'cancelOwn'> = {
             cancelOwn: jest.fn().mockResolvedValue(cancelled),
         };
-        const uc = new CancelReservationUseCase(mock as unknown as ReservationRepository);
+        const cache = { invalidateConcertAndList: jest.fn() };
+        const uc = new CancelReservationUseCase(
+            mock as unknown as ReservationRepository,
+            cache as never,
+        );
         const out = await uc.execute('r1', 'u1');
         expect(out).toBe(cancelled);
         expect(mock.cancelOwn).toHaveBeenCalledWith('r1', 'u1');
+        expect(cache.invalidateConcertAndList).toHaveBeenCalledWith('c1');
     });
 
     it('should return not found when not own or missing', async () => {
         const mock: Pick<ReservationRepository, 'cancelOwn'> = {
             cancelOwn: jest.fn().mockResolvedValue(null),
         };
-        const uc = new CancelReservationUseCase(mock as unknown as ReservationRepository);
+        const cache = { invalidateConcertAndList: jest.fn() };
+        const uc = new CancelReservationUseCase(
+            mock as unknown as ReservationRepository,
+            cache as never,
+        );
         await expect(uc.execute('r1', 'other-user')).rejects.toBeInstanceOf(NotFoundException);
     });
 });

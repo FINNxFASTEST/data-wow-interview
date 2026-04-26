@@ -21,9 +21,14 @@ describe('CreateReservationUseCase (delegates to repository transaction)', () =>
         const mock: Pick<ReservationRepository, 'reserveForConcert'> = {
             reserveForConcert: jest.fn().mockResolvedValue(r),
         };
-        const uc = new CreateReservationUseCase(mock as unknown as ReservationRepository);
+        const cache = { invalidateConcertAndList: jest.fn() };
+        const uc = new CreateReservationUseCase(
+            mock as unknown as ReservationRepository,
+            cache as never,
+        );
         const out = await uc.execute('u1', 'c1');
         expect(out).toBe(r);
+        expect(cache.invalidateConcertAndList).toHaveBeenCalledWith('c1');
     });
 
     it('should propagate sold out (ConflictException)', async () => {
@@ -32,7 +37,11 @@ describe('CreateReservationUseCase (delegates to repository transaction)', () =>
                 .fn()
                 .mockRejectedValue(new ConflictException({ message: 'Concert is sold out' })),
         };
-        const uc = new CreateReservationUseCase(mock as unknown as ReservationRepository);
+        const cache = { invalidateConcertAndList: jest.fn() };
+        const uc = new CreateReservationUseCase(
+            mock as unknown as ReservationRepository,
+            cache as never,
+        );
         await expect(uc.execute('u1', 'c1')).rejects.toBeInstanceOf(ConflictException);
     });
 
@@ -44,7 +53,11 @@ describe('CreateReservationUseCase (delegates to repository transaction)', () =>
                 }),
             ),
         };
-        const uc = new CreateReservationUseCase(mock as unknown as ReservationRepository);
+        const cache = { invalidateConcertAndList: jest.fn() };
+        const uc = new CreateReservationUseCase(
+            mock as unknown as ReservationRepository,
+            cache as never,
+        );
         await expect(uc.execute('u1', 'c1')).rejects.toBeInstanceOf(ConflictException);
     });
 
@@ -52,7 +65,11 @@ describe('CreateReservationUseCase (delegates to repository transaction)', () =>
         const mock: Pick<ReservationRepository, 'reserveForConcert'> = {
             reserveForConcert: jest.fn().mockRejectedValue(new NotFoundException()),
         };
-        const uc = new CreateReservationUseCase(mock as unknown as ReservationRepository);
+        const cache = { invalidateConcertAndList: jest.fn() };
+        const uc = new CreateReservationUseCase(
+            mock as unknown as ReservationRepository,
+            cache as never,
+        );
         await expect(uc.execute('u1', 'missing')).rejects.toBeInstanceOf(NotFoundException);
     });
 });

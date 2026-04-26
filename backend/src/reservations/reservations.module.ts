@@ -4,11 +4,12 @@ import { CreateReservationUseCase } from './application/use-cases/create-reserva
 import { CancelReservationUseCase } from './application/use-cases/cancel-reservation.use-case';
 import { FindMyReservationsUseCase } from './application/use-cases/find-my-reservations.use-case';
 import { FindAuditReservationsUseCase } from './application/use-cases/find-audit-reservations.use-case';
+import { ConcertCacheModule } from '../concerts/infrastructure/concert-cache.module';
 import { ReservationsPersistenceModule } from './infrastructure/reservations-persistence.module';
 import { ReservationsController } from './presentation/reservations.controller';
 
 @Module({
-    imports: [ReservationsPersistenceModule],
+    imports: [ReservationsPersistenceModule, ConcertCacheModule],
     providers: [
         CreateReservationUseCase,
         CancelReservationUseCase,

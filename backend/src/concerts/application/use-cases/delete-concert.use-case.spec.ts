@@ -22,9 +22,11 @@ describe('DeleteConcertUseCase', () => {
             findById: jest.fn().mockResolvedValue(existing),
             remove: jest.fn().mockResolvedValue(undefined),
         };
-        const uc = new DeleteConcertUseCase(mock as unknown as ConcertRepository);
+        const cache = { invalidateConcertAndList: jest.fn() };
+        const uc = new DeleteConcertUseCase(mock as unknown as ConcertRepository, cache as never);
         await uc.execute('c1');
         expect(mock.remove).toHaveBeenCalledWith('c1');
+        expect(cache.invalidateConcertAndList).toHaveBeenCalledWith('c1');
     });
 
     it('should throw when not found', async () => {
@@ -32,8 +34,10 @@ describe('DeleteConcertUseCase', () => {
             findById: jest.fn().mockResolvedValue(null),
             remove: jest.fn(),
         };
-        const uc = new DeleteConcertUseCase(mock as unknown as ConcertRepository);
+        const cache = { invalidateConcertAndList: jest.fn() };
+        const uc = new DeleteConcertUseCase(mock as unknown as ConcertRepository, cache as never);
         await expect(uc.execute('missing')).rejects.toBeInstanceOf(NotFoundException);
         expect(mock.remove).not.toHaveBeenCalled();
+        expect(cache.invalidateConcertAndList).not.toHaveBeenCalled();
     });
 });

@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { ConcertRepository } from '../../infrastructure/persistence/concert.repository';
+import { ConcertListCacheService } from '../../infrastructure/cache/concert-list-cache.service';
 import { ConcertListView } from './find-all-concerts.use-case';
 import { ReservationRepository } from '../../../reservations/infrastructure/persistence/reservation.repository';
 
@@ -9,9 +10,14 @@ export class FindConcertByIdUseCase {
     constructor(
         private readonly concerts: ConcertRepository,
         private readonly reservations: ReservationRepository,
+        private readonly concertListCache: ConcertListCacheService,
     ) {}
 
     async execute(id: string): Promise<ConcertListView> {
+        const cached = await this.concertListCache.getById(id);
+        if (cached) {
+            return cached;
+        }
         const c = await this.concerts.findById(id);
         if (!c) {
             throw new NotFoundException();
@@ -19,11 +25,13 @@ export class FindConcertByIdUseCase {
         const counts = await this.reservations.countActiveByConcertIds([c.id]);
         const reservedCount = counts[c.id] ?? 0;
         const remaining = Math.max(0, c.totalSeats - reservedCount);
-        return {
+        const view: ConcertListView = {
             concert: c,
             reservedCount,
             soldOut: reservedCount >= c.totalSeats,
             remainingSeats: remaining,
         };
+        void this.concertListCache.setById(id, view);
+        return view;
     }
 }

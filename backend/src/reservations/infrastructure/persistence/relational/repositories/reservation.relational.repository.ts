@@ -37,7 +37,7 @@ export class ReservationRelationalRepository implements ReservationRepository {
         try {
             return await this.sequelize.transaction(
                 {
-                    isolationLevel: Transaction.ISOLATION_LEVELS.REPEATABLE_READ,
+                    isolationLevel: Transaction.ISOLATION_LEVELS.READ_COMMITTED,
                 },
                 async (transaction) => {
                     const concert = await this.concertModel.findByPk(concertId, {

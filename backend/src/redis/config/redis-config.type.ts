@@ -7,4 +7,6 @@ export type RedisConfig = {
     db?: number;
     sessionPrefix: string;
     sessionTtlSeconds: number;
+    concertCacheKeyPrefix: string;
+    concertCacheTtlSeconds: number;
 };

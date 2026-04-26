@@ -39,6 +39,15 @@ class EnvironmentVariablesValidator {
     @Min(60)
     @IsOptional()
     REDIS_SESSION_TTL_SECONDS: number;
+
+    @IsString()
+    @IsOptional()
+    REDIS_CONCERT_CACHE_PREFIX: string;
+
+    @IsInt()
+    @Min(1)
+    @IsOptional()
+    REDIS_CONCERT_CACHE_TTL_SECONDS: number;
 }
 
 export default registerAs<RedisConfig>('redis', () => {
@@ -55,5 +64,9 @@ export default registerAs<RedisConfig>('redis', () => {
         sessionTtlSeconds: process.env.REDIS_SESSION_TTL_SECONDS
             ? parseInt(process.env.REDIS_SESSION_TTL_SECONDS, 10)
             : 60 * 60 * 24 * 30,
+        concertCacheKeyPrefix: process.env.REDIS_CONCERT_CACHE_PREFIX ?? 'concerts',
+        concertCacheTtlSeconds: process.env.REDIS_CONCERT_CACHE_TTL_SECONDS
+            ? parseInt(process.env.REDIS_CONCERT_CACHE_TTL_SECONDS, 10)
+            : 60,
     };
 });

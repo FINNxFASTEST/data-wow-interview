@@ -20,7 +20,8 @@ describe('CreateConcertUseCase', () => {
         const mock: Pick<ConcertRepository, 'create'> = {
             create: jest.fn().mockResolvedValue(concert),
         };
-        const uc = new CreateConcertUseCase(mock as unknown as ConcertRepository);
+        const cache = { invalidateList: jest.fn() };
+        const uc = new CreateConcertUseCase(mock as unknown as ConcertRepository, cache as never);
         const dto: CreateConcertDto = {
             name: 'A',
             description: 'D',
@@ -28,6 +29,7 @@ describe('CreateConcertUseCase', () => {
         };
         const out = await uc.execute('u1', dto);
         expect(out).toBe(concert);
+        expect(cache.invalidateList).toHaveBeenCalled();
         expect(mock.create).toHaveBeenCalledWith({
             name: 'A',
             description: 'D',
