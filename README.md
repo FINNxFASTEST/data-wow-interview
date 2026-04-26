@@ -7,6 +7,12 @@
 docker compose up --build
 ```
 
+Seed demo accounts once after first boot (wait until backend is healthy):
+
+```bash
+docker compose exec backend npm run seed:run
+```
+
 | Service      | URL                          |
 | ------------ | ---------------------------- |
 | Frontend     | http://localhost:3000        |
