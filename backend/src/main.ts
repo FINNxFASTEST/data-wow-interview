@@ -35,7 +35,7 @@ async function bootstrap() {
   );
 
   const options = new DocumentBuilder()
-    .setTitle('KOB Tickets API')
+    .setTitle('BRAND API')
     .setDescription('Concert listings and seat reservations (JWT, PostgreSQL)')
     .setVersion('1.0')
     .addBearerAuth()

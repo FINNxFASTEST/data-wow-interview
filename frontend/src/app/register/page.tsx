@@ -13,12 +13,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ApiError } from "@/services";
 import { AccessLevelPanel } from "@/components/auth/AccessLevelPanel";
 import { AuthSplitLayout } from "@/components/auth/AuthSplitLayout";
-import {
-  getStoredPortal,
-  parsePortalParam,
-  setStoredPortal,
-  type AuthPortal,
-} from "@/lib/auth-portal";
+import { parsePortalParam, type AuthPortal } from "@/lib/auth-portal";
 import { pathAfterSignIn } from "@/lib/redirect-after-auth";
 import { Button } from "@/components/ui/button";
 
@@ -51,16 +46,12 @@ function RegisterContent() {
   const syncPortal = useCallback(() => {
     const q = parsePortalParam(searchParams.get("portal"));
     if (q) {
-      setStoredPortal(q);
       setPortal(q);
       setStep("form");
       return;
     }
-    const s = getStoredPortal();
-    if (s) {
-      setPortal(s);
-      setStep("form");
-    }
+    setPortal(null);
+    setStep("portal");
   }, [searchParams]);
 
   useEffect(() => {
@@ -80,7 +71,6 @@ function RegisterContent() {
 
   function pickPortal(p: AuthPortal) {
     setPortal(p);
-    setStoredPortal(p);
     setStep("form");
   }
 

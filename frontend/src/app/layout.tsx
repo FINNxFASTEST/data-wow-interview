@@ -12,7 +12,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "KOB Tickets",
+  title: "BRAND",
   description: "Concert ticket reservations — Next.js + NestJS, JWT, PostgreSQL.",
 };
 

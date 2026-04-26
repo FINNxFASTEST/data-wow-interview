@@ -94,9 +94,9 @@ export function UserAppShell({ children }: { children: React.ReactNode }) {
             className="flex items-center gap-2 text-sm font-semibold text-foreground no-underline"
           >
             <span className="flex h-7 w-7 items-center justify-center rounded bg-primary text-primary-foreground text-xs font-bold">
-              K
+              B
             </span>
-            KOB Tickets
+            BRAND
           </Link>
         </div>
         <NavLinks />
@@ -118,9 +118,9 @@ export function UserAppShell({ children }: { children: React.ReactNode }) {
                   className="flex items-center gap-2 text-sm font-semibold text-foreground no-underline"
                 >
                   <span className="flex h-7 w-7 items-center justify-center rounded bg-primary text-primary-foreground text-xs font-bold">
-                    K
+                    B
                   </span>
-                  KOB Tickets
+                  BRAND
                 </Link>
               </div>
               <div className="flex flex-1 flex-col p-3">
@@ -128,7 +128,7 @@ export function UserAppShell({ children }: { children: React.ReactNode }) {
               </div>
             </SheetContent>
           </Sheet>
-          <span className="ml-1 text-sm font-medium text-foreground">KOB Tickets</span>
+          <span className="ml-1 text-sm font-medium text-foreground">BRAND</span>
         </header>
         <div className="min-h-0 flex-1 overflow-auto bg-theme-body-bg">{children}</div>
       </div>

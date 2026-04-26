@@ -17,7 +17,7 @@ const portalLabel: Record<AuthPortal, string> = {
 
 export function AuthSplitLayout({
   children,
-  brandTitle = "KOB Tickets",
+  brandTitle = "BRAND",
   brandLine,
   portal,
 }: AuthSplitLayoutProps) {
@@ -35,7 +35,7 @@ export function AuthSplitLayout({
           className="inline-flex w-fit items-center gap-2 text-sm font-semibold no-underline text-primary-foreground"
         >
           <span className="flex h-8 w-8 items-center justify-center rounded bg-primary-foreground/15 text-primary-foreground text-xs font-bold">
-            K
+            B
           </span>
           {brandTitle}
         </Link>

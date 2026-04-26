@@ -14,7 +14,7 @@ type AccessLevelPanelProps = {
 
 export function AccessLevelPanel({
   onChoose,
-  brandTitle = "KOB Tickets",
+  brandTitle = "BRAND",
   footer,
 }: AccessLevelPanelProps) {
   return (
@@ -37,7 +37,7 @@ export function AccessLevelPanel({
             Select Access Level
           </h1>
           <p className="mx-auto mt-3 max-w-xl text-pretty text-[14px] leading-relaxed text-theme-secondary md:text-[15px]">
-            Choose how you use KOB Tickets. You will sign in with an account that has the
+            Choose how you use {brandTitle}. You will sign in with an account that has the
             matching role.
           </p>
         </div>

@@ -21,9 +21,9 @@ export function Nav() {
           className="flex items-center gap-2 font-semibold text-foreground no-underline text-sm shrink-0"
         >
           <span className="flex h-6 w-6 items-center justify-center rounded bg-primary text-primary-foreground text-xs font-bold">
-            K
+            B
           </span>
-          <span className="hidden sm:inline">KOB Tickets</span>
+          <span className="hidden sm:inline">BRAND</span>
         </Link>
 
         <nav className="flex items-center gap-1 sm:gap-2 flex-1 min-w-0 justify-end">
