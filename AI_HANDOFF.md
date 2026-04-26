@@ -1,44 +1,43 @@
 # AI Handoff — KOB Interview Concert Ticket Service
 
 ## Current Status
-**Phase**: Stack migration done (users + session on PostgreSQL/Sequelize; seeds in `seeds/relational/`). Next: domain modules in `goal/TODO.md`.
+**Phase**: Stack migration done (users + session on PostgreSQL/Sequelize; seeds in `seeds/relational/`). **Next**: implement the interview spec end-to-end — see [goal/TODO.md](goal/TODO.md) (Concert + Reservation, migrations, UI, tests).
 
 ## Critical Stack Correction
 > Persistence is **PostgreSQL + Sequelize** (`sequelize-typescript` models). Do not reintroduce MongoDB.
 
 ## Where to Start
-1. Read `goal/TODO.md` — this is the source of truth for what needs to be done.
-2. Read `ARCHITECTURE.md` — clean architecture rules that must be followed.
+1. Read `goal/TODO.md` — end-to-end checklist mapped to [goal/goal.pdf](goal/goal.pdf).
+2. Read `ARCHITECTURE.md` — clean architecture rules.
 3. Read `CLAUDE.md` — project conventions and commands.
 
 ## What Has Been Done
 - [x] Stack migration: Mongoose removed; `SequelizeModule.forRootAsync` + `UserEntity` / `SessionEntity` + relational repos and seeds
-- [x] Roles defined: admin=1, host=2, customer=3
-- [x] Auth module exists (JWT, register/login, session, refresh) — using Sequelize user/session
-- [x] TODO list at `goal/TODO.md`
+- [x] Auth module (JWT, register/login, session, refresh) on Sequelize
+- [x] Roles in code still **host/customer** (3-way) in places — **interview spec wants admin + user only**; align `RoleEnum` + seeds + frontend per `goal/TODO.md`
 
 ## What Needs to Be Done Next
-See `goal/TODO.md` — build domain modules in order:
-1. Venues module
-3. Events module
-4. Ticket Types module
-5. Orders module
+Per `goal/TODO.md` (in rough order):
+1. Add **Sequelize migrations** (umzug or CLI); initial schema for `concerts` + `reservations`
+2. **Concerts** + **Reservations** modules (clean arch), guards, transaction + locking for booking
+3. **Frontend** routes: concerts list/detail, my reservations, admin concerts + audit
+4. **Tests**: use-case specs for concert CRUD and reservation edge cases
+5. **Dockerfile(s)**, compose wiring, **README** (run, architecture, libs, tests, bonus Q&A)
 
 ## Key Conventions
-- Use-cases inject repository ports (abstract classes), never other use-cases or services.
-- Controllers have zero business logic — one use-case call per route.
-- Domain classes: pure TypeScript, no decorators.
-- Sequelize entities: `@Table`, `@Column`, `@ForeignKey`, `@BelongsTo` decorators.
+- Use-cases inject repository ports (abstract classes), not concrete Sequelize repos.
+- Controllers delegate only — one use-case per action.
+- Domain: pure TypeScript. Sequelize: `@Table` / `@Column` / relations.
 - Mapper: static `toDomain()` / `toPersistence()` only.
-- IDs: UUID strings in domain; `DataType.UUID` + `DataType.UUIDV4` default in entities.
-- Roles are numeric in DB/JWT — never store role names as strings.
+- IDs: UUID strings in domain; `DataType.UUID` in entities.
 
-## Seed Accounts (after migration)
-| Email | Password | Role |
+## Target Seed Accounts (after role alignment — see TODO)
+| Email | Password | Role (spec) |
 |---|---|---|
-| admin@example.com | secret | admin |
-| host@example.com | secret | host |
-| customer@example.com | secret | customer |
+| admin@example.com | secret | admin (1) |
+| user@example.com | secret | user (2) |
+
+(Until refactored, old seeds may still list host/customer; update to match the two-role model.)
 
 ## Ports
 | Service | URL |
