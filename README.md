@@ -4,13 +4,13 @@
 ## Production
 
 ```bash
-docker compose up --build
+docker compose -f docker-compose.prod.yml up --build
 ```
 
 Seed demo accounts once after first boot (wait until backend is healthy):
 
 ```bash
-docker compose exec backend npm run seed:run
+docker compose -f docker-compose.prod.yml exec backend npm run seed:run
 ```
 
 | Service      | URL                          |
