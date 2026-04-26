@@ -107,33 +107,20 @@ function RegisterContent() {
 
   if (step === "portal") {
     return (
-      <div className="min-h-screen flex flex-col bg-background">
-        <div className="flex h-14 items-center border-b border-border px-4 md:px-6">
-          <Link
-            href="/"
-            className="flex w-fit items-center gap-2 text-sm font-semibold text-foreground no-underline"
-          >
-            <span className="flex h-6 w-6 items-center justify-center rounded bg-foreground text-background text-xs font-bold">
-              K
-            </span>
-            KOB Tickets
-          </Link>
-        </div>
-        <div className="flex flex-1 items-center justify-center p-4 md:p-8">
-          <div className="w-full max-w-md">
-            <AccessLevelPanel onChoose={pickPortal} />
-            <p className="mt-6 text-center text-sm text-muted-foreground">
-              Already registered?{" "}
-              <Link
-                href="/login"
-                className="font-medium text-foreground underline-offset-4 hover:underline"
-              >
-                Sign in
-              </Link>
-            </p>
-          </div>
-        </div>
-      </div>
+      <AccessLevelPanel
+        onChoose={pickPortal}
+        footer={
+          <p className="text-center text-sm text-theme-secondary">
+            Already registered?{" "}
+            <Link
+              href="/login"
+              className="font-medium text-theme-primary underline-offset-4 hover:underline"
+            >
+              Sign in
+            </Link>
+          </p>
+        }
+      />
     );
   }
 
@@ -251,7 +238,7 @@ function RegisterContent() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="mt-1 h-10 w-full rounded-md bg-foreground px-4 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-50 cursor-pointer border-0"
+          className="mt-1 h-10 w-full rounded-md bg-primary px-4 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50 cursor-pointer border-0"
         >
           {isSubmitting ? "Creating account…" : "Create account"}
         </button>
@@ -274,7 +261,7 @@ export default function RegisterPage() {
   return (
     <Suspense
       fallback={
-        <div className="min-h-screen flex items-center justify-center bg-background text-sm text-muted-foreground">
+        <div className="min-h-screen flex items-center justify-center bg-theme-body-bg text-sm text-muted-foreground">
           Loading…
         </div>
       }

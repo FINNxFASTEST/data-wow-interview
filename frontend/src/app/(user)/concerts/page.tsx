@@ -149,7 +149,7 @@ export default function ConcertsListPage() {
                           type="button"
                           disabled={busyId !== null}
                           onClick={() => void doReserve(c.id)}
-                          className="h-9 min-w-[7rem] rounded-md bg-foreground text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-50"
+                          className="h-9 min-w-[7rem] rounded-md bg-primary text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-50"
                         >
                           {busyId === c.id ? "…" : "Reserve"}
                         </button>

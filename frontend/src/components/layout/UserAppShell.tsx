@@ -93,7 +93,7 @@ export function UserAppShell({ children }: { children: React.ReactNode }) {
             href="/concerts"
             className="flex items-center gap-2 text-sm font-semibold text-foreground no-underline"
           >
-            <span className="flex h-7 w-7 items-center justify-center rounded bg-foreground text-background text-xs font-bold">
+            <span className="flex h-7 w-7 items-center justify-center rounded bg-primary text-primary-foreground text-xs font-bold">
               K
             </span>
             KOB Tickets
@@ -117,7 +117,7 @@ export function UserAppShell({ children }: { children: React.ReactNode }) {
                   onClick={() => setOpen(false)}
                   className="flex items-center gap-2 text-sm font-semibold text-foreground no-underline"
                 >
-                  <span className="flex h-7 w-7 items-center justify-center rounded bg-foreground text-background text-xs font-bold">
+                  <span className="flex h-7 w-7 items-center justify-center rounded bg-primary text-primary-foreground text-xs font-bold">
                     K
                   </span>
                   KOB Tickets
@@ -130,7 +130,7 @@ export function UserAppShell({ children }: { children: React.ReactNode }) {
           </Sheet>
           <span className="ml-1 text-sm font-medium text-foreground">KOB Tickets</span>
         </header>
-        <div className="min-h-0 flex-1 overflow-auto">{children}</div>
+        <div className="min-h-0 flex-1 overflow-auto bg-theme-body-bg">{children}</div>
       </div>
     </div>
   );

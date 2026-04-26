@@ -1,12 +1,57 @@
+import {
+  AUTH_SESSION_EXPIRED_EVENT,
+  applyAuthTokens,
+  clearStoredAuth,
+  getAccessToken,
+  getRefreshToken,
+} from '@/lib/auth-tokens';
+
 const RAW_BASE = process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:3001';
 const BASE = RAW_BASE.replace(/\/$/, '');
 const API_PREFIX = '/api/v1';
 
-const TOKEN_KEY = 'app_token';
+const NO_REFRESH_PATHS = new Set([
+  '/auth/email/login',
+  '/auth/email/register',
+  '/auth/refresh',
+]);
 
-function getToken(): string | null {
-  if (typeof window === 'undefined') return null;
-  return localStorage.getItem(TOKEN_KEY);
+let refreshPromise: Promise<string | null> | null = null;
+
+async function refreshAccessToken(): Promise<string | null> {
+  if (refreshPromise) return refreshPromise;
+
+  refreshPromise = (async () => {
+    try {
+      const rt = getRefreshToken();
+      if (!rt) return null;
+      const res = await fetch(`${BASE}${API_PREFIX}/auth/refresh`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${rt}`,
+        },
+      });
+      if (!res.ok) return null;
+      const data = (await res.json()) as {
+        token: string;
+        refreshToken: string;
+      };
+      applyAuthTokens(data.token, data.refreshToken);
+      return data.token;
+    } catch {
+      return null;
+    } finally {
+      refreshPromise = null;
+    }
+  })();
+
+  return refreshPromise;
+}
+
+function shouldAttemptRefresh(path: string): boolean {
+  if (NO_REFRESH_PATHS.has(path)) return false;
+  return Boolean(getRefreshToken());
 }
 
 export class ApiError extends Error {
@@ -20,15 +65,32 @@ export class ApiError extends Error {
 }
 
 export async function request<T>(path: string, init: RequestInit = {}): Promise<T> {
-  const token = getToken();
-  const headers: Record<string, string> = {
+  const url = `${BASE}${API_PREFIX}${path}`;
+
+  const buildHeaders = (token: string | null): Record<string, string> => ({
     'Content-Type': 'application/json',
     ...(init.headers as Record<string, string>),
-  };
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+  });
 
-  if (token) headers.Authorization = `Bearer ${token}`;
+  let access = getAccessToken();
+  let res = await fetch(url, { ...init, headers: buildHeaders(access) });
 
-  const res = await fetch(`${BASE}${API_PREFIX}${path}`, { ...init, headers });
+  if (
+    res.status === 401 &&
+    shouldAttemptRefresh(path) &&
+    getRefreshToken()
+  ) {
+    const next = await refreshAccessToken();
+    if (next) {
+      res = await fetch(url, { ...init, headers: buildHeaders(next) });
+    } else {
+      clearStoredAuth();
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent(AUTH_SESSION_EXPIRED_EVENT));
+      }
+    }
+  }
 
   if (!res.ok) {
     const body = (await res.json().catch(() => ({}))) as {

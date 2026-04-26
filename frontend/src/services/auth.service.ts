@@ -1,8 +1,6 @@
 import type { AuthResponse, User, UserRole } from '@/types';
+import { applyAuthTokens, clearStoredAuth } from '@/lib/auth-tokens';
 import { request } from './http-client';
-
-const TOKEN_KEY = 'app_token';
-const REFRESH_KEY = 'app_refresh';
 
 function roleIdToName(id?: number | string | null): UserRole {
   return String(id) === '1' ? 'admin' : 'user';
@@ -37,17 +35,11 @@ export function mapMeResponseToUser(me: MeResponse): User {
 }
 
 export function persistAuth(res: AuthResponse) {
-  if (typeof window === 'undefined') return;
-  localStorage.setItem(TOKEN_KEY, res.token);
-  localStorage.setItem(REFRESH_KEY, res.refreshToken);
-  document.cookie = `${TOKEN_KEY}=${res.token}; path=/; SameSite=Lax`;
+  applyAuthTokens(res.token, res.refreshToken);
 }
 
 export function clearAuth() {
-  if (typeof window === 'undefined') return;
-  localStorage.removeItem(TOKEN_KEY);
-  localStorage.removeItem(REFRESH_KEY);
-  document.cookie = `${TOKEN_KEY}=; path=/; max-age=0`;
+  clearStoredAuth();
 }
 
 export const authApi = {

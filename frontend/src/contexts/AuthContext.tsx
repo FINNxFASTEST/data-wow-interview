@@ -1,6 +1,10 @@
 "use client";
 
 import {
+  AUTH_SESSION_EXPIRED_EVENT,
+  TOKEN_KEY,
+} from "@/lib/auth-tokens";
+import {
   authApi,
   clearAuth,
   mapMeResponseToUser,
@@ -33,8 +37,6 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-const TOKEN_KEY = "app_token";
-
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
@@ -62,6 +64,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     document.cookie = `${TOKEN_KEY}=${stored}; path=/; SameSite=Lax`;
     hydrate().finally(() => setLoading(false));
   }, [hydrate]);
+
+  useEffect(() => {
+    const onSessionExpired = () => {
+      setToken(null);
+      setUser(null);
+    };
+    window.addEventListener(AUTH_SESSION_EXPIRED_EVENT, onSessionExpired);
+    return () =>
+      window.removeEventListener(AUTH_SESSION_EXPIRED_EVENT, onSessionExpired);
+  }, []);
 
   const login = useCallback(
     async (email: string, password: string) => {

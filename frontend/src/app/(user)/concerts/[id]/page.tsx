@@ -80,7 +80,7 @@ export default function ConcertDetailPage() {
                 type="button"
                 onClick={() => void reserve()}
                 disabled={busy}
-                className="h-10 px-5 rounded-md bg-foreground text-background text-sm font-medium hover:opacity-90 disabled:opacity-50 w-full sm:w-auto"
+                className="h-10 px-5 rounded-md bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 disabled:opacity-50 w-full sm:w-auto"
               >
                 {busy ? "Booking…" : "Reserve one seat"}
               </button>

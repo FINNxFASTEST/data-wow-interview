@@ -19,17 +19,17 @@ export function Button({
   return (
     <button
       className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-full border border-transparent cursor-pointer font-thai text-sm font-medium transition-all duration-150",
+        "inline-flex items-center justify-center gap-2 rounded-full border border-transparent cursor-pointer text-sm font-medium transition-all duration-150",
         size === "default" && "px-[22px] py-3",
         size === "lg" && "px-7 py-4 text-[15px]",
         variant === "primary" &&
-          "bg-ember text-cream-50 hover:bg-ember-dark border-transparent",
-        variant === "dark" && "bg-forest-800 text-cream-50 border-transparent",
+          "bg-primary text-primary-foreground hover:bg-primary/90 border-transparent",
+        variant === "dark" &&
+          "bg-secondary text-secondary-foreground hover:bg-secondary/80 border-border",
         variant === "ghost" &&
-          "bg-transparent text-ink hover:bg-cream-100",
-        variant === "ghost" && "border-[rgba(27,38,32,0.22)]",
+          "bg-transparent text-foreground hover:bg-muted border-border/60",
         block && "w-full",
-        className
+        className,
       )}
       {...props}
     >

@@ -1,27 +1,29 @@
+@import "./theme.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 224 71.4% 4.1%;
-  --card: 0 0% 100%;
-  --card-foreground: 224 71.4% 4.1%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 224 71.4% 4.1%;
-  --primary: 220.9 39.3% 11%;
-  --primary-foreground: 210 20% 98%;
-  --secondary: 220 14.3% 95.9%;
-  --secondary-foreground: 220.9 39.3% 11%;
-  --muted: 220 14.3% 95.9%;
-  --muted-foreground: 220 8.9% 46.1%;
-  --accent: 220 14.3% 95.9%;
-  --accent-foreground: 220.9 39.3% 11%;
-  --destructive: 0 84.2% 60.2%;
-  --destructive-foreground: 210 20% 98%;
-  --border: 220 13% 91%;
-  --input: 220 13% 91%;
-  --ring: 224 71.4% 4.1%;
+  --background: var(--theme-surface);
+  --foreground: var(--theme-body-color);
+  --card: var(--theme-surface);
+  --card-foreground: var(--theme-body-color);
+  --popover: var(--theme-surface);
+  --popover-foreground: var(--theme-body-color);
+  --primary: var(--theme-primary);
+  --primary-foreground: var(--theme-on-primary);
+  --secondary: var(--theme-muted-surface);
+  --secondary-foreground: var(--theme-body-color);
+  --muted: var(--theme-muted-surface);
+  --muted-foreground: var(--theme-secondary-color);
+  --accent: var(--theme-muted-surface);
+  --accent-foreground: var(--theme-body-color);
+  --destructive: var(--theme-danger);
+  --destructive-foreground: var(--theme-on-primary);
+  --border: var(--theme-border);
+  --input: var(--theme-border);
+  --ring: var(--theme-primary);
   --radius: 0.5rem;
   --glow-orchid: 290 60% 48%;
   --glow-amber: 35 90% 52%;
@@ -41,7 +43,7 @@ body {
 }
 
 body {
-  background: hsl(var(--background));
+  background: var(--theme-body-bg);
   color: hsl(var(--foreground));
   font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -75,5 +77,23 @@ button:focus-visible {
       hsl(var(--glow-orchid) / 0.15) 100%
     );
     border: 1px solid hsl(var(--border));
+  }
+
+  /* Admin stat cards: defined here so colors always ship (avoids missing JIT utilities in dev). */
+  .admin-stat-card {
+    border: 1px solid hsl(var(--theme-border) / 0.45);
+    color: hsl(var(--theme-on-primary));
+  }
+
+  .admin-stat-card--blue {
+    background-color: hsl(var(--theme-primary) / 1);
+  }
+
+  .admin-stat-card--green {
+    background-color: hsl(var(--theme-dashboard-stat-success) / 1);
+  }
+
+  .admin-stat-card--red {
+    background-color: hsl(var(--theme-danger) / 1);
   }
 }

@@ -20,7 +20,7 @@ export function Nav() {
           href="/"
           className="flex items-center gap-2 font-semibold text-foreground no-underline text-sm shrink-0"
         >
-          <span className="flex h-6 w-6 items-center justify-center rounded bg-foreground text-background text-xs font-bold">
+          <span className="flex h-6 w-6 items-center justify-center rounded bg-primary text-primary-foreground text-xs font-bold">
             K
           </span>
           <span className="hidden sm:inline">KOB Tickets</span>
@@ -72,7 +72,7 @@ export function Nav() {
               </Link>
               <Link
                 href="/register"
-                className="text-sm h-8 px-3 rounded-md bg-foreground text-background hover:opacity-90 no-underline inline-flex items-center transition-colors font-medium"
+                className="text-sm h-8 px-3 rounded-md bg-primary text-primary-foreground hover:opacity-90 no-underline inline-flex items-center transition-colors font-medium"
               >
                 Get started
               </Link>
