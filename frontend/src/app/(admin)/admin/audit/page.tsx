@@ -52,14 +52,13 @@ export default function AdminAuditPage() {
               <TableHead>When</TableHead>
               <TableHead>Account</TableHead>
               <TableHead>Concert</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="w-24 text-right">Action</TableHead>
+              <TableHead>Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {rows === null && (
               <TableRow>
-                <TableCell colSpan={6} className="h-20">
+                <TableCell colSpan={5} className="h-20">
                   <div className="h-8 max-w-sm bg-muted/40 rounded animate-pulse" />
                 </TableCell>
               </TableRow>
@@ -88,9 +87,6 @@ export default function AdminAuditPage() {
                     ) : (
                       <Badge variant="secondary">{r.status}</Badge>
                     )}
-                  </TableCell>
-                  <TableCell className="text-right text-muted-foreground text-xs">
-                    —
                   </TableCell>
                 </TableRow>
               ))}

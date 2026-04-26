@@ -118,9 +118,9 @@ From the repository root (uses `docker-compose.yml` in this project):
 docker compose up --build
 ```
 
-- **Web** — http://localhost:3000  
-- **API** — http://localhost:3001  
-- The backend image runs `sequelize-cli db:migrate` on start, then `node dist/main.js`.  
+- **Web** — http://localhost:3000
+- **API** — http://localhost:3001
+- The backend image runs `sequelize-cli db:migrate` on start, then `node dist/main.js`.
 - **Seed** after Postgres is up and the API is listening:
 
 ```bash
@@ -144,7 +144,7 @@ docker compose -f docker-compose.prod.yml exec backend node \
   -e "require('child_process').execSync('npm run seed:run', {stdio:'inherit'})"
 ```
 
-**Stop:** `docker compose -f docker-compose.prod.yml down`  
+**Stop:** `docker compose -f docker-compose.prod.yml down`
 **Wipe data:** `docker compose -f docker-compose.prod.yml down -v`
 
 ---
