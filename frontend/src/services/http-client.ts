@@ -31,8 +31,16 @@ export async function request<T>(path: string, init: RequestInit = {}): Promise<
   const res = await fetch(`${BASE}${API_PREFIX}${path}`, { ...init, headers });
 
   if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new ApiError(res.status, body?.message ?? res.statusText, body);
+    const body = (await res.json().catch(() => ({}))) as {
+      message?: string | string[];
+    };
+    const m = body?.message;
+    const msg = Array.isArray(m) ? m.join(', ') : m;
+    throw new ApiError(
+      res.status,
+      (typeof msg === 'string' && msg) || res.statusText,
+      body,
+    );
   }
 
   const text = await res.text();

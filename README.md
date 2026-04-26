@@ -65,11 +65,10 @@ npm run seed:run
 
 (Equivalent: `npm run seed:run:relational`.)
 
-| Email                 | Password | Role     |
-| --------------------- | -------- | -------- |
-| `admin@example.com`   | `secret` | admin    |
-| `host@example.com`    | `secret` | host     |
-| `customer@example.com` | `secret` | customer |
+| Email                | Password | Role  |
+| -------------------- | -------- | ----- |
+| `admin@example.com`  | `secret` | admin |
+| `user@example.com`   | `secret` | user  |
 
 ### 4. Frontend
 
@@ -79,11 +78,25 @@ npm install
 npm run dev
 ```
 
-Create `frontend/.env.local`:
+Create `frontend/.env.local` (or copy from `frontend/.env.local.example`):
 
 ```env
 NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
+
+### Database migrations (optional in dev, required when `DATABASE_SYNC=false`)
+
+In development, Sequelize can auto-apply the schema when `DATABASE_SYNC` is not set to `false`. For production-style runs or the Docker API image, run:
+
+```bash
+cd backend
+npm run migration:run
+```
+
+- **Undo last migration:** `npm run migration:revert`
+- **Generate a new file:** `npm run migration:generate -- --name your-name`
+
+Migrations live in `backend/src/database/migrations/`.
 
 ### Service URLs
 
@@ -97,13 +110,32 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
 
 ---
 
-## Production (Docker)
+## Full stack in Docker (API + web + database)
+
+From the repository root (uses `docker-compose.yml` in this project):
+
+```bash
+docker compose up --build
+```
+
+- **Web** — http://localhost:3000  
+- **API** — http://localhost:3001  
+- The backend image runs `sequelize-cli db:migrate` on start, then `node dist/main.js`.  
+- **Seed** after Postgres is up and the API is listening:
+
+```bash
+docker compose exec backend node -e "require('child_process').execSync('npm run seed:run', {stdio:'inherit'})"
+```
+
+Set strong `AUTH_JWT_SECRET` and `AUTH_REFRESH_SECRET` in `docker-compose.yml` (or override via env) before any public deployment. Also set `FRONTEND_DOMAIN` to match the browser origin for CORS.
+
+## Production (Docker) — optional alternate compose
 
 ```bash
 docker compose -f docker-compose.prod.yml up --build
 ```
 
-Change `AUTH_JWT_SECRET` and `AUTH_REFRESH_SECRET` in `docker-compose.prod.yml` (and any DB user/password) before a real deployment.
+If your repo includes `docker-compose.prod.yml`, use it. Change `AUTH_JWT_SECRET` and `AUTH_REFRESH_SECRET` in that file (and any DB user/password) before a real deployment.
 
 **Seed accounts (first run, after the backend is healthy):**
 

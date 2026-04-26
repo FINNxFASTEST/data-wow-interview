@@ -3,6 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { SequelizeModuleOptions, SequelizeOptionsFactory } from '@nestjs/sequelize';
 
 import { AllConfigType } from '../config/config.type';
+import { ConcertEntity } from '../concerts/infrastructure/persistence/relational/entities/concert.entity';
+import { ReservationEntity } from '../reservations/infrastructure/persistence/relational/entities/reservation.entity';
 import { SessionEntity } from '../session/infrastructure/persistence/relational/entities/session.entity';
 import { UserEntity } from '../users/infrastructure/persistence/relational/entities/user.entity';
 
@@ -12,11 +14,13 @@ export class SequelizeConfigService implements SequelizeOptionsFactory {
 
     createSequelizeOptions(): SequelizeModuleOptions {
         const uri = this.configService.get('database.url', { infer: true });
-        const synchronize = this.configService.get('app.nodeEnv', { infer: true }) !== 'production';
+        const nodeEnv = this.configService.get('app.nodeEnv', { infer: true });
+        const dbSyncOff = process.env.DATABASE_SYNC === 'false';
+        const synchronize = nodeEnv !== 'production' && !dbSyncOff;
 
         const base: SequelizeModuleOptions = {
             dialect: 'postgres',
-            models: [UserEntity, SessionEntity],
+            models: [UserEntity, SessionEntity, ConcertEntity, ReservationEntity],
             autoLoadModels: true,
             synchronize,
             logging: false,

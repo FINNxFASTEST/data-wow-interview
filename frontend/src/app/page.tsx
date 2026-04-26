@@ -8,76 +8,66 @@ export default function HomePage() {
       <Nav />
 
       <main className="flex-1">
-        {/* Hero */}
-        <section className="mx-auto max-w-6xl px-4 md:px-6 py-24 md:py-32 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-xs text-muted-foreground mb-6">
-            <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
-            Ready to use
-          </div>
+        <section className="stage-hero">
+          <div className="mx-auto max-w-6xl px-4 md:px-6 py-20 md:py-28 text-center">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/80 px-3 py-1 text-xs text-muted-foreground mb-6">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+              Live inventory · one seat per user per show
+            </div>
 
-          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight text-foreground max-w-2xl mx-auto leading-[1.1]">
-            The stack to ship your next project
-          </h1>
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-foreground max-w-2xl mx-auto leading-[1.1]">
+              Concerts, seats, and clean reservations
+            </h1>
 
-          <p className="mt-6 text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            A production-ready boilerplate with NestJS, Next.js 15, MongoDB, and
-            JWT authentication — pre-wired and ready to extend.
-          </p>
+            <p className="mt-5 text-base md:text-lg text-muted-foreground max-w-lg mx-auto leading-relaxed">
+              Browse upcoming concerts, book a seat, and keep your history in
+              one place. Admins list shows and can audit every reservation.
+            </p>
 
-          <div className="flex items-center justify-center gap-3 mt-10">
-            <Link
-              href="/register"
-              className="h-10 px-5 rounded-md bg-foreground text-background text-sm font-medium no-underline inline-flex items-center hover:opacity-90 transition-opacity"
-            >
-              Get started
-            </Link>
-            <Link
-              href="/login"
-              className="h-10 px-5 rounded-md border border-border bg-background text-foreground text-sm font-medium no-underline inline-flex items-center hover:bg-accent transition-colors"
-            >
-              Sign in
-            </Link>
-          </div>
-        </section>
-
-        {/* Features grid */}
-        <section className="border-t border-border">
-          <div className="mx-auto max-w-6xl px-4 md:px-6 py-16 md:py-20">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
-              {[
-                {
-                  title: "Authentication",
-                  description:
-                    "JWT access + refresh tokens, session rotation, register/login/logout, and role-based guards out of the box.",
-                },
-                {
-                  title: "Clean Architecture",
-                  description:
-                    "NestJS backend with explicit use-case classes, repository ports, and Mongoose adapters — no god-services.",
-                },
-                {
-                  title: "Ready to extend",
-                  description:
-                    "Add modules with the NestJS CLI scaffold. The auth, user, and role foundation stays clean and untouched.",
-                },
-              ].map((f) => (
-                <div key={f.title} className="bg-background p-6 md:p-8">
-                  <h3 className="text-sm font-semibold text-foreground mb-2">{f.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{f.description}</p>
-                </div>
-              ))}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-10">
+              <Link
+                href="/register"
+                className="h-10 px-6 rounded-md bg-foreground text-background text-sm font-medium no-underline inline-flex items-center justify-center w-full sm:w-auto hover:opacity-90 transition-opacity"
+              >
+                Create account
+              </Link>
+              <Link
+                href="/login"
+                className="h-10 px-6 rounded-md border border-border bg-background text-foreground text-sm font-medium no-underline inline-flex items-center justify-center w-full sm:w-auto hover:bg-accent transition-colors"
+              >
+                I already have a login
+              </Link>
             </div>
           </div>
         </section>
 
-        {/* Tech stack */}
-        <section className="border-t border-border">
-          <div className="mx-auto max-w-6xl px-4 md:px-6 py-12 flex flex-wrap items-center justify-center gap-8">
-            {["NestJS 11", "Next.js 15", "MongoDB", "Mongoose", "JWT", "TypeScript", "Tailwind CSS"].map((t) => (
-              <span key={t} className="text-sm font-medium text-muted-foreground">
-                {t}
-              </span>
-            ))}
+        <section className="concert-ribbon">
+          <div className="mx-auto max-w-6xl px-4 md:px-6 py-12 md:py-16">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-left">
+              {[
+                {
+                  title: "Fair booking",
+                  body: "We lock the concert row and count active holds in a single transaction, with a unique database guard for the last race.",
+                },
+                {
+                  title: "Two roles",
+                  body: "Admins create listings and read the full audit. Users see shows, book one active seat per concert, and manage their own tickets.",
+                },
+                {
+                  title: "Stack you can extend",
+                  body: "NestJS and Next.js 15, JWT sessions, class-validator on the API, and Tailwind + a little custom stage styling here.",
+                },
+              ].map((f) => (
+                <div key={f.title} className="rounded-lg p-4 md:p-5 bg-background/60">
+                  <h3 className="text-sm font-semibold text-foreground mb-2">
+                    {f.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {f.body}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       </main>

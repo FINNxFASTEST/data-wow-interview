@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Input } from "@/components/ui/input";
+import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 import { ApiError } from "@/services";
 
@@ -42,10 +43,12 @@ export default function RegisterPage() {
         firstName: data.firstName,
         lastName: data.lastName,
       });
-      router.push("/");
+      router.push("/concerts");
     } catch (err) {
       const msg = err instanceof ApiError ? err.message : "Something went wrong. Please try again.";
-      setError("root", { message: typeof msg === "string" ? msg : "Something went wrong." });
+      const text = typeof msg === "string" ? msg : "Something went wrong.";
+      setError("root", { message: text });
+      toast.error(text);
     }
   }
 
@@ -55,9 +58,9 @@ export default function RegisterPage() {
       <div className="flex h-14 items-center px-6 border-b border-border">
         <Link href="/" className="flex items-center gap-2 text-sm font-semibold text-foreground no-underline">
           <span className="flex h-6 w-6 items-center justify-center rounded bg-foreground text-background text-xs font-bold">
-            B
+            K
           </span>
-          Boilerplate
+          KOB Tickets
         </Link>
       </div>
 

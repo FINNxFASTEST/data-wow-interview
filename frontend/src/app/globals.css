@@ -23,6 +23,9 @@
   --input: 220 13% 91%;
   --ring: 224 71.4% 4.1%;
   --radius: 0.5rem;
+  --glow-orchid: 290 60% 48%;
+  --glow-amber: 35 90% 52%;
+  --ink-stage: 230 32% 12%;
 }
 
 *,
@@ -48,4 +51,29 @@ input:focus,
 button:focus-visible {
   outline: 2px solid hsl(var(--ring));
   outline-offset: 2px;
+}
+
+@layer components {
+  .stage-hero {
+    background: radial-gradient(
+        ellipse 120% 80% at 50% 0%,
+        hsl(var(--glow-orchid) / 0.2),
+        transparent 55%
+      ),
+      linear-gradient(
+        180deg,
+        hsl(var(--ink-stage) / 0.06) 0%,
+        transparent 100%
+      );
+  }
+
+  .concert-ribbon {
+    background: linear-gradient(
+      90deg,
+      hsl(var(--glow-orchid) / 0.15) 0%,
+      hsl(var(--glow-amber) / 0.12) 50%,
+      hsl(var(--glow-orchid) / 0.15) 100%
+    );
+    border: 1px solid hsl(var(--border));
+  }
 }

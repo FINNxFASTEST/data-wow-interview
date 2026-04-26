@@ -35,8 +35,8 @@ async function bootstrap() {
   );
 
   const options = new DocumentBuilder()
-    .setTitle('NestNext-cleanArch API')
-    .setDescription('Campsite booking platform API')
+    .setTitle('KOB Tickets API')
+    .setDescription('Concert listings and seat reservations (JWT, PostgreSQL)')
     .setVersion('1.0')
     .addBearerAuth()
     .build();

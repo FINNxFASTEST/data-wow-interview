@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "sonner";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 
@@ -10,8 +11,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Boilerplate",
-  description: "NestJS + Next.js starter with JWT auth, roles, and MongoDB.",
+  title: "KOB Tickets",
+  description: "Concert ticket reservations — Next.js + NestJS, JWT, PostgreSQL.",
 };
 
 export default function RootLayout({
@@ -21,8 +22,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={inter.variable}>
-      <body>
-        <AuthProvider>{children}</AuthProvider>
+      <body className="font-sans antialiased">
+        <AuthProvider>
+          {children}
+          <Toaster richColors position="top-center" />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -5,15 +5,7 @@ const TOKEN_KEY = 'app_token';
 const REFRESH_KEY = 'app_refresh';
 
 function roleIdToName(id?: number | string | null): UserRole {
-  switch (String(id)) {
-    case '1':
-      return 'admin';
-    case '2':
-      return 'host';
-    case '3':
-    default:
-      return 'customer';
-  }
+  return String(id) === '1' ? 'admin' : 'user';
 }
 
 export type MeResponse = {

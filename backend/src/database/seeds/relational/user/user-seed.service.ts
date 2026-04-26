@@ -15,8 +15,7 @@ export class UserSeedService {
 
     async run(): Promise<{
         admin: UserEntity;
-        host: UserEntity;
-        customer: UserEntity;
+        user: UserEntity;
     }> {
         const admin = await this.upsert({
             email: 'admin@example.com',
@@ -25,21 +24,14 @@ export class UserSeedService {
             role: RoleEnum.admin,
         });
 
-        const host = await this.upsert({
-            email: 'host@example.com',
-            firstName: 'Helen',
-            lastName: 'Host',
-            role: RoleEnum.host,
+        const user = await this.upsert({
+            email: 'user@example.com',
+            firstName: 'Uma',
+            lastName: 'User',
+            role: RoleEnum.user,
         });
 
-        const customer = await this.upsert({
-            email: 'customer@example.com',
-            firstName: 'Charlie',
-            lastName: 'Customer',
-            role: RoleEnum.customer,
-        });
-
-        return { admin, host, customer };
+        return { admin, user };
     }
 
     findByEmail(email: string) {

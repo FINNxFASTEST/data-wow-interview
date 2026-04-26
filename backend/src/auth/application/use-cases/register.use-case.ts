@@ -25,7 +25,7 @@ export class RegisterUseCase {
     const user = await this.createUser.execute({
       ...dto,
       email: dto.email,
-      role: { id: RoleEnum.customer },
+      role: { id: RoleEnum.user },
       status: { id: StatusEnum.active },
     });
 
