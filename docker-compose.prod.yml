@@ -1,15 +1,23 @@
 version: "3.9"
 
 services:
-  mongo:
-    image: mongo:7
+  postgres:
+    image: postgres:16-alpine
     restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-your_app}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-your_app}
+      POSTGRES_DB: ${DB_NAME:-your_app_db}
     ports:
-      - "27017:27017"
+      - "5432:5432"
     volumes:
-      - mongo_data:/data/db
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${DB_USER:-your_app} -d ${DB_NAME:-your_app_db}",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -43,7 +51,7 @@ services:
       APP_HEADER_LANGUAGE: x-custom-lang
       FRONTEND_DOMAIN: http://localhost:3000
       BACKEND_DOMAIN: http://localhost:3001
-      DATABASE_URL: mongodb://mongo:27017/${DB_NAME:-your_app_db}
+      DATABASE_URL: postgresql://${DB_USER:-your_app}:${DB_PASSWORD:-your_app}@postgres:5432/${DB_NAME:-your_app_db}
       DATABASE_NAME: ${DB_NAME:-your_app_db}
       AUTH_JWT_SECRET: change_me_in_production
       AUTH_JWT_TOKEN_EXPIRES_IN: 15m
@@ -54,7 +62,7 @@ services:
       REDIS_SESSION_PREFIX: auth
       REDIS_SESSION_TTL_SECONDS: "2592000"
     depends_on:
-      mongo:
+      postgres:
         condition: service_healthy
       redis:
         condition: service_healthy
@@ -79,5 +87,5 @@ services:
         condition: service_healthy
 
 volumes:
-  mongo_data:
+  postgres_data:
   redis_data:

@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { SequelizeModule } from '@nestjs/sequelize';
 
 import appConfig from './config/app.config';
 import authConfig from './auth/config/auth.config';
 import databaseConfig from './database/config/database.config';
 import redisConfig from './redis/config/redis.config';
 
-import { MongooseConfigService } from './database/mongoose-config.service';
+import { SequelizeConfigService } from './database/sequelize-config.service';
 
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
@@ -20,8 +20,8 @@ import { SessionModule } from './session/session.module';
             load: [appConfig, authConfig, databaseConfig, redisConfig],
             envFilePath: ['.env'],
         }),
-        MongooseModule.forRootAsync({
-            useClass: MongooseConfigService,
+        SequelizeModule.forRootAsync({
+            useClass: SequelizeConfigService,
         }),
         UsersModule,
         AuthModule,

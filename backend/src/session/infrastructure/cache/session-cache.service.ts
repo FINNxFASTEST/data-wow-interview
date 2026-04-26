@@ -61,7 +61,7 @@ export class SessionCacheService implements OnModuleInit, OnModuleDestroy {
             await this.client.connect();
             this.logger.log('Redis session cache is connected');
         } catch {
-            this.logger.warn('Redis unavailable, falling back to MongoDB-only sessions');
+            this.logger.warn('Redis unavailable, falling back to database-only sessions');
             this.client = null;
         }
     }

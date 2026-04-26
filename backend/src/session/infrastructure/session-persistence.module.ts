@@ -1,19 +1,17 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
-import { SessionSchema, SessionSchemaClass } from './persistence/session.schema';
+import { SequelizeModule } from '@nestjs/sequelize';
+import { SessionEntity } from './persistence/relational/entities/session.entity';
 import { SessionRepository } from './persistence/session.repository';
-import { SessionDocumentRepository } from './persistence/session.document-repository';
+import { SessionRelationalRepository } from './persistence/relational/repositories/session.relational.repository';
 import { SessionCacheService } from './cache/session-cache.service';
 
 @Module({
-    imports: [
-        MongooseModule.forFeature([{ name: SessionSchemaClass.name, schema: SessionSchema }]),
-    ],
+    imports: [SequelizeModule.forFeature([SessionEntity])],
     providers: [
         SessionCacheService,
         {
             provide: SessionRepository,
-            useClass: SessionDocumentRepository,
+            useClass: SessionRelationalRepository,
         },
     ],
     exports: [SessionRepository],
